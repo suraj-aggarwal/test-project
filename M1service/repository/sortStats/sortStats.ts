@@ -1,29 +1,21 @@
 import * as mongoose from 'mongoose';
-export class UnsortedObject extends mongoose.Schema {
+export class SortStats extends mongoose.Schema {
     constructor(options) {
         const Schema = new mongoose.Schema({
             _id: {
                 type: Object,
                 required: true
             },
-            object: {
+            objectId: {
                 type: Object,
                 required: true,
             },
-            rootkeyCount: {
+            sortDuration: {
                 type:  Number,
                 required: true
             },
-            depth: {
-                type:  Number,
-                required: true
-            },
-            size: {
-                type: Number,
-                required: true,
-            },
-            generationTime: {
-                type: Number,
+            sortAlgorithm: {
+                type:  String,
                 required: true
             }
         });

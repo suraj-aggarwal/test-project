@@ -6,6 +6,7 @@ interface IUnsortedObjets extends mongoose.Document {
     rootkeyCount: number;
     depth: number;
     size: number;
+    generationTime: number;
 }
 
 export default IUnsortedObjets;

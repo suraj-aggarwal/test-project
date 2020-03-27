@@ -1,7 +1,8 @@
 import * as express from 'express';
 import Database from './lib/Database';
-import { unsortedRoute } from './Controllers/routes';
 import * as bodyParser from 'body-parser';
+import { backendRouter } from './routes';
+
 
 class ServerM1 {
 
@@ -25,7 +26,7 @@ class ServerM1 {
             });
             server.use(bodyParser.urlencoded({ extended: true }));
             server.use(bodyParser.json());
-            server.use('/unsorted', unsortedRoute);
+            server.use(backendRouter);
         } catch (err) {
             console.log('Failed to connect to Database.', err);
         }

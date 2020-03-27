@@ -11,14 +11,11 @@ class UnsortedRepo {
     public create = async (data) => {
         data._id = this.generateId();
         console.log('---------------data', data);
-        console.log('rootKeyCount', typeof data.rootkeyCount);
         return this.unsortedModel.create(data);
     }
 
-    public get = async (_id: any): Promise<mongoose.Document> => {
-        const id = mongoose.Types.ObjectId(_id);
-        const result = await this.unsortedModel.findOne({_id: id});
-        return result;
+    public get = async(_id: any) => {
+        return this.unsortedModel.findOne({ _id });
     }
 }
 

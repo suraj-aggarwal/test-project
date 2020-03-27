@@ -1,6 +1,7 @@
-import UnsortedRepo from '../repository/unsortedObjects/UnsortedRepo';
+import UnsortedRepo from '../../repository/unsortedObjects/UnsortedRepo';
 import { Response, Request } from 'express';
-import { objectGenerator } from '../lib/utils/helper';
+import { objectGenerator } from '../../lib/utils/helper';
+import { performance } from 'perf_hooks';
 
 class UnsortedObjectController {
     private unsortedRepo = new UnsortedRepo();
@@ -10,11 +11,14 @@ class UnsortedObjectController {
             console.log('-----------inseide create', req.body);
             const sizeof = require('object-sizeof');
             const { rootkeyCount, depth } = req.body;
+            const start = performance.now();
             const object = objectGenerator(rootkeyCount, depth);
+            const end = performance.now();
+            const generationTime = end - start;
             const size: number = sizeof(object);
             parseInt(rootkeyCount, 10);
             parseInt(depth, 10);
-            const data = { rootkeyCount, depth, object, size };
+            const data = { rootkeyCount, depth, object, size, generationTime };
             const result = await this.unsortedRepo.create(data);
             return res.send(result);
         } catch (err) {
@@ -22,9 +26,18 @@ class UnsortedObjectController {
         }
     }
 
-    sort = async (req: Request, res: Request) => {
-        const { _id, algorithm } = req.query;
-        
+    get = async (req: Request, res: Response) => {
+        try {
+            const { _id } = req.query;
+            const result = await this.unsortedRepo.get(_id);
+            if (result) {
+                return res.send(result);
+            }
+            return res.send(result);
+        } catch (err) {
+            return res.send(err);
+        }
+
     }
 }
 
