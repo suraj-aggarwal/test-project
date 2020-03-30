@@ -8,7 +8,6 @@ class UnsortedObjectController {
 
     create = async (req: Request, res: Response): Promise<Response> => {
         try {
-            console.log('-----------inseide create', req.body);
             const sizeof = require('object-sizeof');
             const { rootkeyCount, depth } = req.body;
             const start = performance.now();
@@ -38,6 +37,18 @@ class UnsortedObjectController {
             return res.send(err);
         }
 
+    }
+
+    list = async (req: Request, res: Response) => {
+        try {
+            const result = await this.unsortedRepo.list();
+            if (result) {
+                return res.send(result);
+            }
+            return res.send(result);
+        } catch (err) {
+            return res.send(err);
+        }
     }
 }
 

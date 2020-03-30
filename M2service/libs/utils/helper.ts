@@ -1,5 +1,20 @@
-export const sortObject = (object: object) => {
-    const result = sortObjectHelper(object, mergeSort);
+export const selectSort = (object: object, sortAlgorithm: string) => {
+    let result = {};
+    switch (sortAlgorithm) {
+        case 'mergeSort':
+            result = sortObject(object, mergeSort);
+            break;
+        case 'quickSort':
+            result = sortObject(object, quickSort);
+            break;
+        default:
+            result = sortObject(object, quickSort);
+    }
+    return result;
+};
+
+const sortObject = (object: object, func: any) => {
+    const result = sortObjectHelper(object, func);
     return result;
 };
 
@@ -13,7 +28,7 @@ const sortObjectHelper = (obj: object, sortFuntion: any): object => {
                 sortObjectHelper[unsorted[i]] = temp;
             }
         }
-        const sortedArray = sortFuntion(Object.keys(obj).sort());
+        const sortedArray = sortFuntion(Object.keys(obj));
         const tempObj = {};
         for (let i = 0; i < len; i++) {
             tempObj[sortedArray[i]] = obj[sortedArray[i]];
@@ -41,3 +56,36 @@ const merge = (node1, node2) => {
         result.push(node1[0] < node2[0] ? node1.shift() : node2.shift());
     return result.concat(node1.length ? node1 : node2);
 };
+
+
+
+const quickSort = (arr) => {
+    const len = arr.length;
+    if (len > 2) {
+        quickSortHelper(arr, 0, arr.length - 1);
+    }
+};
+
+const quickSortHelper = (arr, low, high) => {
+    if (low < high) {
+        let pivot = Math.floor((high + low) / 2);
+        pivot = partation(arr, arr[pivot], low, high);
+        quickSortHelper(arr, pivot + 1, high);
+        quickSortHelper(arr, low, pivot - 1);
+    }
+};
+
+const partation = (arr, pivot, low, high) => {
+    while (low < high) {
+        while (arr[low] < pivot) { low++; }
+        while (arr[high] > pivot) { high--; }
+        if (low <= high) {
+            const temp = arr[low];
+            arr[low] = arr[high];
+            arr[high] = temp;
+        }
+    }
+    return low;
+};
+
+

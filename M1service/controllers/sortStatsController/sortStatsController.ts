@@ -7,20 +7,18 @@ class SortStatsController {
 
     create = async (req: Request, res: Response): Promise<Response> => {
         try {
-            console.log('-----------inseide create', req.body);
             const data = req.body;
             const result = await this.sortStatsRepo.create(data);
-            console.log('--------sort stats', result);
             return res.send(result);
         } catch (err) {
             return res.send(err);
         }
     }
 
-    get = async (req: Request, res: Response) => {
+    get = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { _id } = req.query;
-            const result = await this.sortStatsRepo.get(_id);
+            const { objectId } = req.query;
+            const result = await this.sortStatsRepo.get(objectId);
             return res.send(result);
 
         } catch (err) {

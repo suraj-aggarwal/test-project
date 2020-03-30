@@ -3,6 +3,7 @@ import notFoundRoutes from './libs/routes/notFoundRoutes';
 import errorHandler from './libs/routes/errorHandler';
 import { routeController } from './Controllers/routes';
 import * as bodyParser from 'body-parser';
+import * as cros from 'cors';
 
 class ServerM3 {
 
@@ -22,6 +23,7 @@ class ServerM3 {
                 }
                 console.log('Service M3 Started At port 5000');
             });
+            server.use(cros());
             server.use(bodyParser.urlencoded({ extended: true }));
             server.use(bodyParser.json());
             server.use(routeController);

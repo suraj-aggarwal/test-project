@@ -14,8 +14,8 @@ class UnsortedRepo {
         return this.unsortedModel.create(data);
     }
 
-    public get = async(_id: any) => {
-        return this.unsortedModel.findOne({ _id });
+    public get = async (objectId: any) => {
+        return this.unsortedModel.find({ objectId });
     }
 }
 

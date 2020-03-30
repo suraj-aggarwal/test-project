@@ -6,6 +6,7 @@ class Controller {
 
     create = async (req: Request, res: Response): Promise<Response> => {
         try {
+            console.log('Inside create');
             const { rootkeyCount, depth } = req.body;
             const result = await axios({
                 method: 'post',
@@ -34,9 +35,7 @@ class Controller {
                 }
             });
             const { object } = fetch.data;
-            console.log('before sort--------', object);
             if (object) {
-                console.log('::::::::::::::M2 CALL TO SORT ::::::::::::::');
                 const start = performance.now();
                 const sortedObject = await axios({
                     method: 'get',
@@ -48,8 +47,6 @@ class Controller {
                 });
                 const end = performance.now();
                 duration = end - start;
-                console.log('--------sorted Object', sortedObject.data);
-
                 const sortStats = await axios({
                     method: 'post',
                     url: 'http://localhost:8080/sortStats/create',
@@ -62,6 +59,35 @@ class Controller {
                 return res.send(sortStats.data);
             }
             return res.send({});
+        } catch (err) {
+            return res.send(err);
+        }
+    }
+
+    view = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { objectId } = req.query;
+            console.log('-----------objectId--------', objectId);
+            const result = await axios({
+                method: 'get',
+                url: 'http://localhost:8080/sortStats/get',
+                params: {
+                    objectId,
+                }
+            });
+            return res.send(result.data);
+        } catch (err) {
+            return res.send(err);
+        }
+    }
+
+    list = async(req: Request, res: Response): Promise<Response> => {
+        try {
+            const result = await axios({
+                method: 'get',
+                url: 'http://localhost:8080/unsorted/list',
+            });
+            return res.send(result.data);
         } catch (err) {
             return res.send(err);
         }

@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { sortObject } from './libs/utils/helper';
 import { secondRouter } from './Controllers/routes';
 class ServerM2 {
 
