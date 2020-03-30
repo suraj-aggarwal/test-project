@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   TextField, Button, Grid, Typography,
 } from '@material-ui/core';
+import axios from 'axios';
 
 class AddDialog extends Component {
   constructor(props) {
@@ -24,8 +25,28 @@ class AddDialog extends Component {
     });
   }
 
+  handlerOnClick = () => {
+    const {
+      rootkeyCount, depth,
+    } = this.state;
+    const { addData, data} = this.props;
+    axios.post('http://localhost:5000/create', { rootkeyCount, depth })
+      .then((res) => {
+        const { _id, generationTime, size } = res.data;
+        const element = {
+          rootkeyCount, depth, _id, generationTime, size,
+        };
+        addData(element, data);
+        console.log('outside addData');
+      })
+      .catch((err) => console.log(err));
+  }
+
+
   render() {
-    const { rootkeyCount, depth } = this.state;
+    const {
+      rootkeyCount, depth,
+    } = this.state;
     return (
       <div>
         <Typography variant="subtitle1" gutterBottom>
@@ -60,6 +81,7 @@ class AddDialog extends Component {
               variant="outlined"
               color="primary"
               size="medium"
+              onClick={this.handlerOnClick}
             >
               Add
             </Button>
