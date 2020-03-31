@@ -6,5 +6,5 @@ const sortStats = new SortStats({
     colleciton: 'sortStats',
 });
 
-export const unsortedObjectModel: mongoose.Model<ISortStats> =
+export const sortStatsModel: mongoose.Model<ISortStats> =
     mongoose.model<ISortStats>('sortStats', sortStats, 'sortStats', true);

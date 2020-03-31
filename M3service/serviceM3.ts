@@ -25,7 +25,7 @@ class ServerM3 {
             });
             server.use(cros());
             server.use(bodyParser.urlencoded({ extended: true }));
-            server.use(bodyParser.json());
+            server.use(bodyParser.json({limit: '50mb'}));
             server.use(routeController);
             server.use(errorHandler);
             server.use(notFoundRoutes);

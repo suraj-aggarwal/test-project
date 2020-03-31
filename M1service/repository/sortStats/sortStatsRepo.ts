@@ -1,8 +1,8 @@
-import { unsortedObjectModel } from './UnsortedModel';
+import { sortStatsModel } from './UnsortedModel';
 import * as mongoose from 'mongoose';
 
 class UnsortedRepo {
-    private unsortedModel = unsortedObjectModel;
+    private sortStat = sortStatsModel;
 
     generateId = () => {
         return mongoose.Types.ObjectId();
@@ -11,11 +11,11 @@ class UnsortedRepo {
     public create = async (data) => {
         data._id = this.generateId();
         console.log('---------------data', data);
-        return this.unsortedModel.create(data);
+        return this.sortStat.create(data);
     }
 
     public get = async (objectId: any) => {
-        return this.unsortedModel.find({ objectId });
+        return this.sortStat.find({ objectId });
     }
 }
 

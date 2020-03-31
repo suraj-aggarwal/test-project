@@ -1,5 +1,8 @@
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import { secondRouter } from './Controllers/routes';
+
+
 class ServerM2 {
 
     private server: express.Application;
@@ -16,6 +19,11 @@ class ServerM2 {
             }
             console.log('Service M2 Started At port 9000');
         });
+        server.use(bodyParser.urlencoded({
+            parameterLimit: 100000,
+            limit: '50mb',
+            extended: true
+          }));
         server.use(secondRouter);
     }
 }
